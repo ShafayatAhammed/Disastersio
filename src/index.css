@@ -1,3 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 @tailwind base;
+
+img {
+  @apply pointer-events-none select-none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
 @tailwind components;
 @tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Onest", sans-serif;
+  box-sizing: border-box;
+}
