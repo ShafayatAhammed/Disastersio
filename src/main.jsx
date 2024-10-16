@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { AuthProvider } from "./contexts/auth-context.jsx";
+import { RefProvider } from "./contexts/ref-context.jsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -29,7 +30,9 @@ const appRouter = createBrowserRouter(
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={appRouter} />
+      <RefProvider>
+        <RouterProvider router={appRouter} />
+      </RefProvider>
     </AuthProvider>
   </StrictMode>
 );
