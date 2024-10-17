@@ -20,6 +20,9 @@ export default {
       screens: {
         xlnav: "1200px",
         xl4: "1700px",
+        mdpghd: "850px",
+        smpghd: "690px",
+        xspghd: "450px",
       },
     },
   },
