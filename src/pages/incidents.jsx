@@ -1,4 +1,4 @@
-import Incidents from "../components/incidents/incidents.jsx";
+import Incidents from "../components/incidents.jsx";
 
 const IncidentsPage = () => {
   return <Incidents />;
