@@ -1,21 +1,21 @@
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
-import { NavItem, navItems } from "../header/navbar/navbar.jsx";
-import useReference from "../../hooks/use-reference.jsx";
+import { NavItem, navItems } from "./navbar.jsx";
+import useOffcanvas from "../hooks/use-offcanvas.jsx";
 import { useEffect } from "react";
-import Notification from "../../assets/notification.png";
-import Avatar from "../../assets/avatar.png";
+import Notification from "../assets/notification.png";
+import Avatar from "../assets/avatar.png";
 
 const Offcanvas = () => {
-  const { offcanvasRef } = useReference();
+  const { isOpen, setIsOpen } = useOffcanvas();
 
   const hideOffcanvas = () => {
-    offcanvasRef.current.classList.add("hidden");
+    setIsOpen(false);
   };
 
   useEffect(() => {
     const offcanvasHidder = () => {
       if (window.innerWidth >= 1200) {
-        if (!offcanvasRef.current.classList.contains("hidden")) {
+        if (!isOpen) {
           hideOffcanvas();
         }
       }
@@ -32,8 +32,9 @@ const Offcanvas = () => {
 
   return (
     <div
-      className="fixed top-0 right-0 hidden h-full w-[250px] bg-high-whitesmoke overflow-auto"
-      ref={offcanvasRef}
+      className={`fixed top-0 right-0 ${
+        !isOpen && "hidden"
+      } h-full w-[250px] bg-high-whitesmoke overflow-auto`}
     >
       <div className="flex justify-end p-1">
         <Icon

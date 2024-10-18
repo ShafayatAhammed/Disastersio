@@ -1,9 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
-import Logo from "../../../assets/logo.png";
-import Notification from "../../../assets/notification.png";
-import Avatar from "../../../assets/avatar.png";
+import Logo from "../assets/logo.png";
+import Notification from "../assets/notification.png";
+import Avatar from "../assets/avatar.png";
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
-import useReference from "../../../hooks/use-reference.jsx";
+import useOffcanvas from "../hooks/use-offcanvas.jsx";
 
 export const NavItem = ({ area, item, url }) => {
   return (
@@ -41,10 +41,10 @@ export const navItems = [
 ];
 
 const Navbar = () => {
-  const { offcanvasRef } = useReference();
+  const { setIsOpen } = useOffcanvas();
 
   const showOffcanvas = () => {
-    offcanvasRef.current.classList.remove("hidden");
+    setIsOpen(true);
   };
 
   return (
