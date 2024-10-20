@@ -1,7 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { AuthProvider } from "./contexts/auth-context.jsx";
+import { TypesProvider } from "./contexts/types-context.jsx";
 import { OffcanvasProvider } from "./contexts/offcanvas-context.jsx";
+import { ChatProvider } from "./contexts/chat-context.jsx";
+import { IncidentsProvider } from "./contexts/incidents-context.jsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -22,7 +24,7 @@ const appRouter = createBrowserRouter(
         <Route path="" element={<DashboardPage />} />
         <Route path="incidents" element={<IncidentsPage />} />
         <Route path="incidents/new-incident" element={<NewIncidentPage />} />
-        <Route path="locations" element={<LocationsPage />} />
+        <Route path="locations/:incidentId" element={<LocationsPage />} />
       </Route>
       <Route path="*" element={<p>404, page not found!</p>} />
     </>
@@ -31,10 +33,14 @@ const appRouter = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <OffcanvasProvider>
-        <RouterProvider router={appRouter} />
-      </OffcanvasProvider>
-    </AuthProvider>
+    <OffcanvasProvider>
+      <ChatProvider>
+        <IncidentsProvider>
+          <TypesProvider>
+            <RouterProvider router={appRouter} />
+          </TypesProvider>
+        </IncidentsProvider>
+      </ChatProvider>
+    </OffcanvasProvider>
   </StrictMode>
 );
