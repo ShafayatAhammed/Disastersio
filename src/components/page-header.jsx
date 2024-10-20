@@ -1,8 +1,7 @@
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
 import { useNavigate } from "react-router-dom";
-import Storm from "../assets/storm.png";
 
-const Info = ({ page, subtitle, title }) => {
+const Info = ({ subtitle, title }) => {
   return (
     <>
       <p className="text-sm font-normal xl4:text-lg text-medium-gray">
@@ -16,9 +15,9 @@ const Info = ({ page, subtitle, title }) => {
 };
 
 const Button = ({ type, content, click }) => {
-  const theClassName = `px-5 w-full flex justify-center items-center py-2 text-sm font-bold transition-colors xspghd:col-span-2 rounded-lg ${
+  const theClassName = `px-5 w-full flex justify-center xspghd:col-span-2 items-center py-2 text-sm xl4:text-lg font-bold transition-colors rounded-lg ${
     type === "pmr"
-      ? "bg-high-pmr hover:bg-[#f55602] text-white"
+      ? "bg-high-pmr hover:bg-[#d44c04] text-white"
       : "bg-white hover:bg-gray-100 border border-[#D4D4D8]"
   }`;
 
@@ -29,7 +28,15 @@ const Button = ({ type, content, click }) => {
   );
 };
 
-const PageHeader = ({ page, currentStep, next, back, cancel, finish }) => {
+const PageHeader = ({
+  page,
+  title,
+  currentStep,
+  next,
+  back,
+  cancel,
+  finish,
+}) => {
   const navigate = useNavigate();
   const isDashboard = page === "dashboard";
   const isIncidents = page === "incidents";
@@ -42,39 +49,30 @@ const PageHeader = ({ page, currentStep, next, back, cancel, finish }) => {
         : isIncidents
         ? "Home - Incidents"
         : isLocations
-        ? "Incidents - DR-4699 March 2023 Severe Storms"
+        ? `Incidents - ${
+            title.length <= 13 ? title : title.slice(0, 13) + "..."
+          }`
         : "Home - Incidents - New Incident";
     } else {
-      return isDashboard ? (
-        "Dashboard"
-      ) : isIncidents ? (
-        "Incidents"
-      ) : isLocations ? (
-        <>
-          <img src={Storm} alt="storm" />
-          DR-4699 March 2023 Severe Storms
-        </>
-      ) : (
-        "New Incident"
-      );
+      return isDashboard
+        ? "Dashboard"
+        : isIncidents
+        ? "Incidents"
+        : isLocations
+        ? `${title.length <= 13 ? title : title.slice(0, 13) + "..."}`
+        : "New Incident";
     }
   };
 
   return (
     <div>
       {((isDashboard || isIncidents || isLocations) && (
-        <div className="flex flex-col items-center justify-between gap-2 px-8 py-3 sm:px-20 mdpghd:gap-0 mdpghd:flex-row bg-high-whitesmoke">
+        <div className="flex flex-col items-center justify-between gap-2 px-8 py-3 sm:px-20 mdincident:flex-row bg-high-whitesmoke">
           <div className="text-center mdpghd:text-start">
             <Info
               subtitle={generateInfo("subtitle")}
               title={
-                isLocations ? (
-                  <div className="flex items-center gap-4">
-                    {generateInfo("title")}
-                  </div>
-                ) : (
-                  generateInfo("title")
-                )
+                isLocations ? generateInfo("title") : generateInfo("title")
               }
             />
           </div>
@@ -82,16 +80,16 @@ const PageHeader = ({ page, currentStep, next, back, cancel, finish }) => {
             <form className="relative w-full">
               <Icon
                 icon="material-symbols:search"
-                className="absolute text-lg xl4:text-xl text-medium-gray top-1/2 left-2 translate-y-[-50%]"
+                className="absolute text-lg xl4:text-2xl text-medium-gray top-1/2 left-2 translate-y-[-50%]"
               />
               <input
                 type="text"
-                className="w-full h-full py-2 pr-2 text-sm font-normal bg-white border rounded-md outline-none pl-7 border-high-whitesmoke text-medium-gray"
+                className="w-full h-full py-2 pr-2 text-sm font-normal bg-white border rounded-md outline-none xl4:text-lg pl-7 xl4:pl-8 border-high-whitesmoke text-medium-gray"
                 placeholder="Search incident"
               />
             </form>
             <div className="flex items-center justify-center p-1 bg-white border rounded-md border-high-whitesmoke">
-              <select className="text-sm font-normal outline-none text-medium-gray">
+              <select className="text-sm font-normal bg-white outline-none cursor-pointer xl4:text-lg text-medium-gray">
                 <option>Sort By: Date modified</option>
                 <option>Sort By: Old to new</option>
                 <option>Sort By: New to old</option>
@@ -104,12 +102,17 @@ const PageHeader = ({ page, currentStep, next, back, cancel, finish }) => {
                   "Cypher AI"
                 ) : (
                   <>
-                    <Icon icon="material-symbols:add" className="text-lg" />{" "}
+                    <Icon
+                      icon="material-symbols:add"
+                      className="text-lg xl4:text-xl"
+                    />{" "}
                     {isIncidents ? "New Incident" : "New Location"}
                   </>
                 )
               }
-              click={() => isIncidents && navigate("/incidents/new-incident")}
+              click={() =>
+                isIncidents && navigate("/incidents/new-incident" || undefined)
+              }
             />
           </div>
         </div>

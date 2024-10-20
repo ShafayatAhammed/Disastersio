@@ -4,6 +4,7 @@ import Notification from "../assets/notification.png";
 import Avatar from "../assets/avatar.png";
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
 import useOffcanvas from "../hooks/use-offcanvas.jsx";
+import useIncidents from "../hooks/use-incidents.jsx";
 
 export const NavItem = ({ area, item, url }) => {
   return (
@@ -41,6 +42,7 @@ export const navItems = [
 ];
 
 const Navbar = () => {
+  const incidents = useIncidents();
   const { setIsOpen } = useOffcanvas();
 
   const showOffcanvas = () => {
@@ -48,7 +50,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between border-b bg-high-whitesmoke border-[#3F3F46]">
+    <nav className="flex justify-between border-b bg-high-whitesmoke border-[#3F3F46] sticky top-0 z-30">
       <section className="flex items-center my-3 ml-8 sm:ml-20">
         <Link to="/">
           <img
@@ -64,7 +66,13 @@ const Navbar = () => {
             <NavItem
               area="navbar"
               item={item}
-              url={i === 0 ? "/" : item.toLowerCase()}
+              url={
+                i === 0
+                  ? "/"
+                  : i === 2
+                  ? `/locations/${incidents[0].id}`
+                  : item.toLowerCase()
+              }
               key={i}
             />
           );

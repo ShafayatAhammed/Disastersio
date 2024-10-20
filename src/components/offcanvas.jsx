@@ -32,7 +32,7 @@ const Offcanvas = () => {
 
   return (
     <div
-      className={`fixed top-0 right-0 ${
+      className={`fixed top-0 right-0 z-50 ${
         !isOpen && "hidden"
       } h-full w-[250px] bg-high-whitesmoke overflow-auto`}
     >
